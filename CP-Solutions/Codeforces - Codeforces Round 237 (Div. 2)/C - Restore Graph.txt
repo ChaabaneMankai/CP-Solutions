@@ -1,0 +1,86 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 998244353  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<ll> adj[N];
+bool vis[N];
+queue<ll> q[N];
+vector<pair<ll,ll>> v;
+ll k,n;
+void dfs(int pos, ll x){
+    //if (q[x+1].size()==0 || adj[pos].size()==k)
+      //  return;
+    while (adj[pos].size()<k && q[x+1].size()!=0){
+    ll e=q[x+1].front();
+    q[x+1].pop();
+    v.pb(make_pair(pos,e));
+    adj[pos].pb(e);
+    adj[e].pb(pos);
+    dfs(e,x+1);
+    }
+    return;
+}
+
+
+void solve(){
+    cin>>n>>k;
+    for (ll i=1;i<=n;i++){
+        ll x;
+        cin>>x;
+        q[x].push(i);
+    }
+    ll c=q[0].size();
+    if (c!=1){
+        cout<<-1<<endl;
+        return;
+    }
+    for (ll i=1;i<n;i++){
+        ll e;
+        if (i==1)
+        e=q[i-1].size()*(k);
+        else
+            e=q[i-1].size()*(k-1);
+        if (q[i].size()>e){
+            cout<<-1<<endl;
+            return;
+        }
+    }
+    ll j=q[0].front();
+    q[0].pop();
+    dfs(j,0);
+    cout<<v.size()<<endl;
+    for (ll i=0;i<v.size();i++){
+        cout<<v[i].first<<" "<<v[i].second<<endl;
+    }
+
+
+
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    //cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

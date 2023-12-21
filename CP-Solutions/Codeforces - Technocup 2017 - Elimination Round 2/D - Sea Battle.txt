@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 998244353  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<ll> adj[N];
+
+bool vis[N];
+bool h[N];
+
+
+
+
+void solve(){
+    ll n,a,b,k;
+    cin>>n>>a>>b>>k;
+    string s;
+    cin>>s;
+    vector<ll> v;
+    ll cnt=0;
+    for (ll i=0;i<n;i++){
+        if (s[i]=='0')
+            cnt++;
+        else
+            cnt=0;
+        if (cnt==b){
+            v.pb(i+1);
+            cnt=0;
+        }
+    }
+    cout<<v.size()-a+1<<endl;
+    for (ll i=0;i<v.size()-a+1;i++)
+        cout<<v[i]<<" ";
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    //cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

@@ -1,0 +1,104 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 998244353  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+int mul(const ll& a, const ll& b){ return 1ll*a*b%MOD; } //
+    int add(const ll& a, const ll& b){ return (a+b>=MOD)?a+b-MOD:a+b; }
+    int sub(const ll& a, const ll& b){ return (a-b<0)?a-b+MOD:a-b; }
+    int inv(ll x){
+		ll res = 1, y = MOD-2;
+		while(y>0){
+			if(y&1) res = mul(res,x);
+			y >>= 1, x = mul(x,x);
+		}
+			return res;
+	}
+	int power(ll x,  ll y) //power(x,y)%MOD
+	{
+		if (y == 0)
+			return 1;
+		ll p = power(x, y / 2) % MOD;
+		p = (p * p) % MOD;
+
+    return (y % 2 == 0) ? p : (x * p) % MOD;
+}
+
+
+void solve(){
+    ll n,m;
+    cin>>n>>m;
+    string a,b;
+    vector<ll> aa,bb;
+    cin>>a>>b;
+    ll cnt=0;
+    for (ll i=0;i<m;i++){
+        if (b[i]=='1'){
+            cnt++;}
+        bb.pb(cnt);
+    }
+    for (ll i=0;i<n;i++){
+        if (a[i]=='1')
+            aa.pb(1);
+        else
+            aa.pb(0);
+    }
+
+    /*for (ll i=0;i<aa.size();i++)
+        cout<<aa[i];
+    cout<<endl;
+    for (ll i=0;i<bb.size();i++)
+        cout<<bb[i];
+    cout<<endl;*/
+
+
+    if (n>m){
+        ll diff=n-m;
+        aa.erase(aa.begin(),aa.begin()+diff);
+    }
+    else{
+        ll diff=m-n;
+        bb.erase(bb.begin(),bb.begin()+diff);
+    }
+   /* for (ll i=0;i<aa.size();i++)
+        cout<<aa[i];
+    cout<<endl;
+    for (ll i=0;i<bb.size();i++)
+        cout<<bb[i];
+    cout<<endl;*/
+    ll tot=0;
+    for (ll i=0;i<aa.size();i++){
+        //cout<<i<<" "<<power(2,aa.size()-i-1)<<endl;
+        if (aa[i]==1)
+        tot=add(tot,mul(bb[i],power(2,aa.size()-i-1)));
+    }
+    cout<<tot<<endl;
+
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+   // cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

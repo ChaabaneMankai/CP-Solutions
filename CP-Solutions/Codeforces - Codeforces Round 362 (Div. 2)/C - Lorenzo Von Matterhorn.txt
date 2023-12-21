@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 998244353  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<ll> adj[N];
+
+bool vis[N];
+bool h[N];
+
+ll pgcd(ll a,ll b){
+if (b==0)
+	return a;
+return pgcd(b,a%b);}
+
+
+void solve(){
+    ll q;
+    cin>>q;
+    map<pair<ll,ll>,ll> m;
+    while (q--){
+        ll x;
+        cin>>x;
+        if (x==1){
+            ll l,r,val;
+            cin>>l>>r>>val;
+            while (l!=r){
+                //cout<<l<<" "<<r<<endl;
+                if (l>r){
+                    m[make_pair(l/2,l)]+=val;
+                    l=l/2;
+                }
+                else{
+                    m[make_pair(r/2,r)]+=val;
+                    r=r/2;
+                }
+            }
+        }
+        else{
+            ll l,r;
+            cin>>l>>r;
+            ll cnt=0;
+            while (l!=r){
+                //cout<<l<<" "<<r<<endl;
+                if (l>r){
+                    cnt+=m[make_pair(l/2,l)];
+                    l=l/2;
+                }
+                else{
+                    cnt+=m[make_pair(r/2,r)];
+                    r=r/2;
+                }
+            }
+            cout<<cnt<<endl;
+        }
+    }
+   /* for (auto i:m){
+        cout<<i.first.first<<" "<<i.first.second<<" "<<i.second<<endl;
+    }*/
+
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    //cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

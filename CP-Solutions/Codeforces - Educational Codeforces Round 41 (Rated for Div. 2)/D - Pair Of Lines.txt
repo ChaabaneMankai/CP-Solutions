@@ -1,0 +1,126 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int MOD = 1e9+7;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+ll dot(pair<ll,ll> x,pair<ll,ll> y, pair<ll,ll> z){
+    //cout<<(x.first-y.first)<<" "<<(y.second-z.second)<<" "<<(x.second-y.second)<<" "<<(y.first-z.first)<<endl;
+    return (x.first-y.first)*(y.second-z.second)-(x.second-y.second)*(y.first-z.first);
+}
+
+
+void solve() {
+    ll n;
+    cin>>n;
+    pair<ll,ll> h[n];
+    for (ll i=0;i<n;i++){
+        ll a,b;
+        cin>>a>>b;
+        h[i]={a,b};
+    }
+    if(n<=3){
+        yes();
+        return;
+    }
+    //cout<<dot(h[0],h[1],h[1])<<endl;
+    vector<vector<pair<ll,ll>>> e;
+    for (ll i=0;i<3;i++){
+        for (ll j=i+1;j<3;j++){
+            vector<pair<ll,ll>> e1;
+            pair<ll,ll> x=h[i],y=h[j];
+            for (ll k=0;k<n;k++){
+                if (abs(dot(x,y,h[k]))!=0){
+                    e1.pb(h[k]);
+                }
+            }
+            e.pb(e1);
+        }
+    }
+    for (ll i=0;i<e.size();i++){
+        //cout<<e[i].size()<<endl;
+        if (e[i].size()<=2){
+            yes();
+            return;
+        }
+        pair<ll,ll> x=e[i][0],y=e[i][1];
+        for (ll j=2;j<e[i].size();j++){
+            if(abs(dot(x,y,e[i][j]))!=0){
+                break;
+            }
+            if (j==e[i].size()-1){
+                yes();
+                return;
+            }
+        }
+    }
+    no();
+}
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);std::setprecision(20);
+   // freopen("input.txt","r",stdin);
+   // freopen("output.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<10000005;i++){
+    if (pre[i]) h.pb(i);
+   }*/
+ /*  fact[1]=1;
+   fact[0]=1;
+   for (ll i=2;i<=200002;i++){
+    fact[i]=fact[i-1]*i;
+   }*/
+    int t=1;
+    //cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

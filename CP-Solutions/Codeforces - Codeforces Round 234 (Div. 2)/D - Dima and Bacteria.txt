@@ -1,0 +1,158 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 1e9+7  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+
+ll parent[N];
+vector<ll> adj[N];
+ll y;
+
+bool vis[N];
+
+void make_set(int v) {
+    parent[v] = v;
+}
+
+
+int find_set(int v) {
+    if (v == parent[v])
+        return v;
+    return parent[v] = find_set(parent[v]);
+}
+
+
+void union_sets(int a, int b) {
+    a = find_set(a);
+    // b = find_set(b);
+    parent[a] = b;
+}
+
+void dfs(int pos){
+    vis[pos]=true;
+    for (int i=0;i<adj[pos].size();i++){
+        int s=adj[pos][i];
+
+    if (!vis[s]){
+            dfs(s);
+    }
+    }
+    return;
+}
+
+
+void solve(){
+    ll n,m,k;
+    cin>>n>>m>>k;
+    ll c[k],e[k];
+    ll cnt[k][k];
+    vector<ll> v[k];
+    for (ll i=0;i<k;i++)
+        for (ll j=0;j<k;j++)
+        cnt[i][j]=1e5;
+    for (ll i=1;i<=2*n;i++)
+        make_set(i);
+    for (ll i=0;i<k;i++){
+        cin>>c[i];
+        e[i]=c[i];
+        if (c[i]==1)
+            cnt[i][i]=0;
+        if (i>0)
+            c[i]+=c[i-1];
+        ll h=1;
+        if (i>0)
+            h=c[i-1]+1;
+        for (ll j=h;j<=c[i];j++){
+            union_sets(j,i+n+1);
+            v[i].pb(j);
+        }
+    }
+    vector<pair<pair<ll,ll>,ll>> d;
+    bool verif=true;
+    while (m--){
+        ll u,v,x;
+        cin>>u>>v>>x;
+            d.pb(make_pair(make_pair(u,v),x));
+            if (x==0){
+                adj[u].pb(v);
+                adj[v].pb(u);
+            }
+    }
+    for (ll i=0;i<k;i++){
+        memset(vis,0,sizeof(vis));
+        if (v[i].size()>0){
+            dfs(v[i][0]);
+            for (ll j=0;j<v[i].size();j++){
+                if (!vis[v[i][j]]){
+                    cout<<"No"<<endl;
+                    return;
+                }
+            }
+        }
+
+    }
+
+
+
+
+   /* for (ll i=0;i<k;i++){
+        if (cnt[i][i]!=0) {
+            cout<<"No"<<endl;
+            return;}
+    }*/
+
+    for (ll i=0;i<d.size();i++){
+        ll u=(d[i].first).first,v=(d[i].first).second,x=d[i].second;
+        cnt[find_set(u)-n-1][find_set(v)-n-1]=min(cnt[find_set(u)-n-1][find_set(v)-n-1],x);
+        cnt[find_set(v)-n-1][find_set(u)-n-1]=min(cnt[find_set(v)-n-1][find_set(u)-n-1],x);
+    }
+
+    /*for (ll i=1;i<=n;i++)
+        cout<<find_set(i)<<" ";
+    cout<<endl;*/
+    for (ll l=0;l<k;l++){
+        for (ll i=0;i<k;i++){
+            for (ll j=0;j<k;j++){
+                cnt[i][j]= min(cnt[i][j], cnt[i][l] + cnt[l][j]);
+            }
+        }
+    }
+
+    cout<<"Yes"<<endl;
+    for (ll i=0;i<k;i++){
+        for (ll j=0;j<k;j++)
+            if (cnt[i][j]==1e5)
+            cout<<-1<<" ";
+        else
+            cout<<cnt[i][j]<<" ";
+        cout<<endl;
+    }
+
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+   // cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

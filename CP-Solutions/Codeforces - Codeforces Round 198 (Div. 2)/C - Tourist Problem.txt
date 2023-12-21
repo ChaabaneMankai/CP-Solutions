@@ -1,0 +1,72 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 998244353  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<ll> adj[N];
+
+bool vis[N];
+bool h[N];
+
+ll pgcd(ll a,ll b){
+if (b==0)
+	return a;
+return pgcd(b,a%b);}
+
+
+void solve(){
+    ll n;
+    cin>>n;
+    ll a[n];
+    ll s1=0,s2=0;
+    ll s[n];
+    for (ll i=0;i<n;i++){
+        cin>>a[i];
+    }
+    sort(a,a+n);
+    for (ll i=0;i<n;i++){
+        s1+=a[i];
+        if (i==0)
+            s[i]=a[i];
+        else
+            s[i]=s[i-1]+a[i];
+    }
+    for (ll i=0;i<n;i++){
+        if (i>0)
+        s2+=(i)*a[i]-s[i-1];
+        //cout<<(i)*a[i]-s[i-1]<<" "<<i<<" "<<a[i]<<endl;
+    }
+   //cout<<(2*s2)<<endl;
+    ll k=s1+2*s2;
+    ll d=pgcd(k,n);
+    n=n/d;
+    k=k/d;
+    cout<<k<<" "<<n<<endl;
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    //cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

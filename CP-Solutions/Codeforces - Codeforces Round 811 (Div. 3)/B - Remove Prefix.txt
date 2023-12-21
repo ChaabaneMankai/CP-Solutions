@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =1e5+7;;
+const int MOD = 1e9+7  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+
+
+int mul(const int& a, const int& b){ return 1ll*a*b%MOD; } //
+    int add(const int& a, const int& b){ return (a+b>=MOD)?a+b-MOD:a+b; }
+    int sub(const int& a, const int& b){ return (a-b<0)?a-b+MOD:a-b; }
+    int inv(int x){
+		int res = 1, y = MOD-2;
+		while(y>0){
+			if(y&1) res = mul(res,x);
+			y >>= 1, x = mul(x,x);
+		}
+			return res;
+	}
+	int power(int x,  int y) //power(x,y)%MOD
+	{
+		if (y == 0)
+			return 1;
+		int p = power(x, y / 2) % MOD;
+		p = (p * p) % MOD;
+
+    return (y % 2 == 0) ? p : (x * p) % MOD;
+}
+
+void solve(){
+    ll n;
+    cin>>n;
+    ll cnt[n];
+    for (ll i=0;i<n;i++)
+        cin>>cnt[i];
+    map<ll,ll> h;
+    for (ll i=n-1;i>=0;i--){
+        //cout<<"i"<<i<<endl;
+        if (h[cnt[i]]>0){
+            cout<<i+1<<endl;
+            return;
+        }
+        else{
+            h[cnt[i]]++;
+        }
+    }
+    cout<<0<<endl;
+
+
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(9);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    cin>>t;
+    /*fact[0]=0;
+    fact[1]=1;
+    divisors[0]=0;
+    divisors[1]=0;
+    for (ll i=2;i<=100005;i++){
+        fact[i]=mul(fact[i-1],i);
+        divisors[i]=add(divisors[i-1],printDivisors(i)-1);
+    }*/
+    while(t--){
+            solve();
+    }
+return 0;
+}

@@ -1,0 +1,161 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int mod = 998244353;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+set<ll> s;
+
+ll k=-1;
+void solve() {
+    ll n;
+    cin>>n;
+     map<ll,ll> m,newm;
+    vll a;
+    f(i,0,n,1){
+        ll x;
+        cin>>x;
+        a.pb(x);
+        m[x]++;
+    };
+    vll e;
+
+    f(i,0,4,1){
+        n=n-e.size();
+     //   if(n==1){
+       //     break;
+       // }
+        cout<<"- "<<e.size()<<" ";
+        f(j,0,e.size(),1){
+            cout<<e[j]<<" ";
+            m[a[e[j]-1]]--;
+        }
+        cout<<endl;
+        cout.flush();
+        a.clear();
+        e.clear();
+        newm.clear();
+        f(j,0,n,1){
+            ll x;
+            cin>>x;
+            a.pb(x);
+            newm[x]++;
+        }
+        ll k=-1;
+        for (auto j:newm){
+            if(newm[j.first]>m[j.first]){
+                k=j.first;
+                f(l,0,n,1){
+                    if(a[l]!=k) e.pb(l+1);
+                }
+            }
+        }
+        if(n-e.size()==1){
+            break;
+        }
+        m=newm;
+
+    }
+   /* for( auto i:newm){
+        if(newm[i.first]>m[i.first]){
+            f(j,0,n,1){
+                if(a[j]==i.first){
+                    cout<<"! "<<j+1<<endl;
+                    cout.flush();
+                    return;
+                }
+            }
+        }
+    }*/
+    f(i,0,n,1){
+        bool FG=false;
+        f(j,0,e.size(),1){
+            if (e[j]==i+1) FG=true;
+        }
+        if (!FG){
+            cout<<"! "<<i+1<<endl;
+            cout.flush();
+            return;
+        }
+    }
+
+
+
+//    cout<<"! 1"<<endl;
+  //  cout.flush();
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<105;i++){
+    if (pre[i]) h.pb(i);
+   }
+   sort(h.begin(),h.end(),greater<ll>());*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

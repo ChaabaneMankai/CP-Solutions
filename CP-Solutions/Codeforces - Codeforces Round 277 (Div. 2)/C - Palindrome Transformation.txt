@@ -1,0 +1,255 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int MOD = 1e9+7;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+
+
+
+
+
+
+
+int mul(const int& a, const int& b){ return 1ll*a*b%MOD; } //
+    int add(const int& a, const int& b){ return (a+b>=MOD)?a+b-MOD:a+b; }
+    int sub(const int& a, const int& b){ return (a-b<0)?a-b+MOD:a-b; }
+    int inv(int x){
+		int res = 1, y = MOD-2;
+		while(y>0){
+			if(y&1) res = mul(res,x);
+			y >>= 1, x = mul(x,x);
+		}
+			return res;
+	}
+	int power(int x,  int y) //power(x,y)%MOD
+	{
+		if (y == 0)
+			return 1;
+		int p = power(x, y / 2) % MOD;
+		p = (p * p) % MOD;
+
+    return (y % 2 == 0) ? p : (x * p) % MOD;
+}
+
+//tri binaire (du bas vers le haut)
+// complexité log2(n)
+// build o(N);
+//query O(N);
+// update O(1);
+
+const int N=2e5+10;
+ll n1;
+ll a[N];
+ll mrg (ll x ,ll y )
+{
+    return x&y;
+}
+
+struct segment_tree
+{
+    vector<ll> tree;
+    void clear()
+    {
+        tree.clear();
+    }
+
+    void init(int num, const vector<ll>& a)
+    {
+        n1 = num;
+        tree.assign(4 * n1, 0ll);
+        build(a);
+    }
+
+    void build(const vector<ll>& a, int id=0,int ns = 0, int ne = n1-1)
+    {
+        if(ns==ne){
+            tree[id] = a[ns];
+            return ;
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        build(a,l, ns, md);
+        build(a,r, md+1, ne);
+        tree[id] = mrg(tree[l],tree[r]);
+    }
+
+
+    ll query(int qs, int qe, int id=0, int ns=0, int ne=n1-1)
+    {
+        if(ns>qe || qs>ne){
+            return 0; ///infnity
+        }
+        if(qs<=ns && qe>=ne){
+            return tree[id];
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        ll ndl = query(qs, qe, l, ns, md);
+        ll ndr = query(qs, qe,r, md+1,ne);
+        return mrg(ndl,ndr );
+    }
+
+    void upd(int pos , int val , int id=0, int ns=0,int ne=n1-1)
+    {
+        if(ns>pos || pos>ne){
+            return;
+        }
+        if(ns==ne){
+            tree[id]=val;
+            return ;
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        upd(pos, val,l, ns, md);
+        upd(pos, val, r, md+1, ne);
+        tree[id] = mrg(tree[l],tree[r]);
+    }
+} sta ;
+
+bool check(ll l,ll mid,ll k,segment_tree tree){
+    int e=tree.query(l-1,mid-1);
+    cout<<"here"<<l-1<<" "<<mid-1<<" "<<e<<endl;
+    if (e>=k) return true;
+    return false;
+
+}
+ll nb,ns,nc;
+ll pb,ps,pc;
+ll flous;
+ll b,ss,c;
+bool fnct(ll mid){
+    ll e=flous;
+    if(b==0){
+    }
+    else if (nb<mid*b){
+        e-=(mid*b-nb)*pb;
+    }
+    if(c==0){
+
+    }
+    else if (nc<mid*c){
+        e-=(mid*c-nc)*pc;
+    }
+    if (ss==0){
+
+    }
+    else if (ns<mid*ss){
+        e-=(mid*ss-ns)*ps;
+    }
+    //cout<<"e"<<e<<endl;
+    if (e>=0) return true;
+    return false;
+}
+
+void solve() {
+    ll n,p;
+    cin>>n>>p;
+    string s;
+    cin>>s;
+    ll tot=0;
+    p--;
+    if ((n%2==0 && p>=n/2) || (n%2==1 && p>n/2)) p=n-1-p;
+    ll mini=p;
+    ll maxi=p;
+    for (ll i=0;i<n/2;i++){
+        ll x=max(s[n-i-1],s[i])-min(s[n-i-1],s[i]);
+        ll y=min(s[n-i-1],s[i])-max(s[n-i-1],s[i])+26;
+        if(min(x,y)>0){
+            mini=min(mini,i);
+            maxi=max(maxi,i);
+            tot+=min(x,y);
+        }
+    }
+    //cout<<tot<<endl;
+    ll cnt1=0,cnt2=0;
+  //  if(p<n/2){
+        for (ll i=mini;i<p;i++){
+            cnt1++;
+        }
+        for (ll i=p+1;i<=maxi;i++){
+            cnt2++;
+        }
+   // }
+  //  cout<<tot<<endl;
+  //  cout<<mini<<" "<<p<<" "<<maxi<<endl;
+  //  cout<<cnt1<<" "<<cnt2<<endl;
+    if (mini==p && maxi==p) tot+=0;
+    else if((mini==p && maxi>p) || (maxi==p && mini<p)) tot+=max(cnt1,cnt2);
+    else if(mini<p && maxi>p) tot+=min(cnt1,cnt2)*2+max(cnt1,cnt2);
+    cout<<tot<<endl;
+
+
+}
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<10000005;i++){
+    if (pre[i]) h.pb(i);
+   }*/
+ /*  fact[1]=1;
+   fact[0]=1;
+   for (ll i=2;i<=200002;i++){
+    fact[i]=fact[i-1]*i;
+   }*/
+    int t=1;
+    //cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

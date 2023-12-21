@@ -1,0 +1,106 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =2*1e1+7;;
+const int MOD = 1e9+7  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<ll> d1,d2;
+vector<ll> d;
+void printDivisors(ll a,ll b)
+{
+    // Vector to store half of the divisors
+    //vector<ll> v;
+    for (int i = 1; i <= sqrt(a); i++) {
+        if (a % i == 0 ) {
+
+            // check if divisors are equal
+            if (a / i == i)
+                d1.pb(i);
+            else {
+                d1.pb(i);
+                d1.pb(a/i);
+            }
+        }
+    }
+
+    for (int i = 1; i <= sqrt(b); i++) {
+        if (b % i == 0 ) {
+
+            // check if divisors are equal
+            if (b / i == i)
+                d2.pb(i);
+            else {
+                d2.pb(i);
+                d2.pb(b/i);
+            }
+        }
+    }
+
+    for (ll i=0;i<d1.size();i++){
+        for (ll j=0;j<d2.size();j++){
+            if (d1[i]==d2[j]){
+                d.pb(d1[i]);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+void solve(){
+    ll a,b;
+    cin>>a>>b;
+    ll q;
+    printDivisors(a,b);
+    sort(d.begin(),d.end());
+    cin>>q;
+    while (q--){
+        ll l,r;
+        cin>>l>>r;
+        std::vector<ll>::iterator k=upper_bound(d.begin(),d.end(),r);
+        //cout<<"test"<<*k<<endl;
+        if (k==d.begin()){
+            cout<<-1<<endl;
+        }
+        else{
+            k--;
+            if (*k<l || *k>r){
+                cout<<-1<<endl;
+            }
+            else
+            cout<<*k<<endl;
+        }
+
+    }
+    /*for (ll i=0;i<d.size();i++){
+        cout<<d[i]<<" ";
+    }*/
+}
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+ //  cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

@@ -1,0 +1,115 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int mod = 998244353;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+set<ll> s;
+
+ll k=-1;
+void solve() {
+    ll n,x,y;
+    cin>>x>>y>>n;
+    ll b[n-1];
+    b[n-2]=1;
+    for (ll i=n-3;i>=0;i--){
+        b[i]=b[i+1]+1;
+    }
+    ll a[n];
+    a[0]=x;
+    f(i,1,n,1){
+    a[i]=a[i-1]+b[i-1];
+    }
+    if(a[n-1]>y){
+        cout<<-1<<endl;
+        return;
+    }
+    else{
+        ll diff=y-a[n-1];
+        f(i,1,n,1) a[i]+=diff;
+    }
+    f(i,0,n,1){
+    cout<<a[i]<<" ";}
+    cout<<endl;
+
+
+
+
+    return;
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<105;i++){
+    if (pre[i]) h.pb(i);
+   }*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

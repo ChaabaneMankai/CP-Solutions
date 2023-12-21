@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pb push_back
+#define all(v) v.begin(), v.end()
+#define ts(s) to_string(s)
+#define endl "\n"
+#define ff first
+#define ss second
+#define yes cout<<"YES"
+#define no cout<<"NO"
+#define vi vector<int>
+//stoi(string) -> int
+
+void solve()
+{
+    int n, k;
+    cin >> n >> k;
+    int a[n];
+    for(int i=0; i<n; i++) cin >> a[i];
+    vector<int> v;
+    for(int i=0; i<n-1; i++)
+    {
+        if (2 * a[i+1] > a[i]) v.pb(i);
+    }
+    int sz = v.size(), ans = 0, ct = 1;
+    // for(int i=0; i<sz; i++) cout << v[i] << ' ';
+   // if (ct == k) ans++, ct--;
+   if (k==1){
+    cout<<v.size()<<endl;
+    return;
+   }
+    for(int i = 1; i < sz ; i++)
+    {
+        if (v[i] == v[i-1] + 1) ct++;
+        else ct = 1;
+        //cout<<ct<<endl;
+        if (ct == k) ans++, ct--;
+    }
+    cout << ans;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout << fixed << setprecision(0);
+	int t = 1, i = 1;
+	cin >> t;
+	while (t--)
+	{
+		// cout << "Case #" << i++ << ": ";
+		solve();
+		cout << endl;
+	}
+	return 0;
+}

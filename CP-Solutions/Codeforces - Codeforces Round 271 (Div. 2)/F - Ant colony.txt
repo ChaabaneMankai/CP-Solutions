@@ -1,0 +1,130 @@
+/**
+ * In this code we have a very large array called arr, and very large set of operations
+ * Operation #1: Increment the elements within range [i, j] with value val
+ * Operation #2: Get max element within range [i, j]
+ * Build tree: build_tree(1, 0, N-1)
+ * Update tree: update_tree(1, 0, N-1, i, j, value)
+ * Query tree: query_tree(1, 0, N-1, i, j)
+ * Actual space required by the tree = 2*2^ceil(log_2(n)) - 1
+ */
+
+#include<iostream>
+#include<bits/stdc++.h>
+#include<algorithm>
+using namespace std;
+
+#include<string.h>
+#include<math.h>
+
+#define N 200005
+#define MAX 10000005 // Why? :D
+#define inf 1e18
+#define ll long long
+
+
+ll n1;
+
+ll mrg (ll x ,ll y )
+{
+    return __gcd(x,y);
+}
+
+struct segment_tree
+{
+    vector<ll> tree;
+    void clear()
+    {
+        tree.clear();
+    }
+
+    void init(int num, const vector<ll>& a)
+    {
+        n1 = num;
+        tree.assign(4 * n1, 0ll);
+        build(a);
+    }
+
+    void build(const vector<ll>& a, int id=0,int ns = 0, int ne = n1-1)
+    {
+        if(ns==ne){
+            tree[id] = a[ns];
+            return ;
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        build(a,l, ns, md);
+        build(a,r, md+1, ne);
+        tree[id] = mrg(tree[l],tree[r]);
+    }
+
+
+    ll query(int qs, int qe, int id=0, int ns=0, int ne=n1-1)
+    {
+        if(ns>qe || qs>ne){
+            return 0; ///infnity
+        }
+        if(qs<=ns && qe>=ne){
+            return tree[id];
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        ll ndl = query(qs, qe, l, ns, md);
+        ll ndr = query(qs, qe,r, md+1,ne);
+        return mrg(ndl,ndr );
+    }
+
+    void upd(int pos , int val , int id=0, int ns=0,int ne=n1-1)
+    {
+        if(ns>pos || pos>ne){
+            return;
+        }
+        if(ns==ne){
+            tree[id]=val;
+            return ;
+        }
+        int l = 2*id+1;
+        int r = l+1;
+        int md = ns+(ne-ns)/2;
+        upd(pos, val,l, ns, md);
+        upd(pos, val, r, md+1, ne);
+        tree[id] = mrg(tree[l],tree[r]);
+    }
+} sta ;
+
+
+
+int main() {
+    ll n;
+    cin>>n;
+    vector<ll> a(n);
+    map<ll,set<pair<ll,ll>>> h;
+    set<ll> k;
+    for (ll i=0;i<n;i++){
+        cin>>a[i];
+        h[a[i]].insert({i+1,h[a[i]].size()+1});
+        k.insert(a[i]);
+    }
+    segment_tree tr;
+    tr.init(n,a);
+    ll m;
+    cin>>m;
+    while(m--){
+        ll l,r;
+        cin>>l>>r;
+        ll x=tr.query(l-1,r-1);
+        //cout<<x<<endl;
+        auto e1=h[x].lower_bound({l,0});
+        auto e2=h[x].lower_bound({r+1,0});
+        if (e1==h[x].end() || e2==h[x].begin()){
+            cout<<r-l+1<<endl;
+        }
+        else{
+            e2--;
+            ll res=(*e2).second-(*e1).second;
+            //cout<<(*e1).second<<" here "<<(*e2).second<<endl;
+            cout<<r-l-res<<endl;
+        }
+    }
+}

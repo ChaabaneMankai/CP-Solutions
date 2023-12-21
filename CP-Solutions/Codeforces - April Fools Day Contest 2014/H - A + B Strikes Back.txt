@@ -1,0 +1,133 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =3*1e5+7;
+const int MOD = 1e9+7  ;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+vector<pair<ll,ll>> adj[N];
+ll a[N],verif[N];
+
+
+
+//tri binaire (du bas vers le haut)
+// complexité log2(n)
+// build o(N);
+//query O(N);
+// update O(1);
+
+pair<ll,ll> tree[4*N];
+ll q,n;
+pair<ll,ll> mrg(pair<ll,ll> x,pair<ll,ll> y){
+    pair<ll,ll> h;
+   /* if (x.first==x.second && y.first==y.second)
+        h=make_pair(x.first,y.first);
+    else if (x.first==x.second){
+        if (y.first>x.first && y.second>x.first)
+            h=y;
+        else{
+            h=make_pair(x.first,max(y.first,y.second));
+        }
+    }
+    else if (y.first==y.second){
+        if (x.first>y.first && x.second>y.first)
+            h=x;
+        else{
+            h=make_pair(y.first,max(x.first,x.second));
+        }
+    }
+    else{
+
+    }*/
+    vector<ll> v;
+    v.pb(x.first);v.pb(x.second);v.pb(y.first);v.pb(y.second);
+    sort(v.begin(),v.end());
+    h=make_pair(v[2],v[3]);
+    if (h.first<h.second){
+        swap(h.first,h.second);
+    }
+    return h;
+}
+
+void build(int id=0,int ns=0,int ne=n-1){
+    if (ns==ne){
+        pair<ll,ll> h;
+        h=make_pair(a[ns],0);
+        tree[id]=h;
+        return ;
+    }
+    int l=2*id+1;
+    int r=l+1;
+    int md=ns+(ne-ns)/2;
+    build(l,ns,md);
+    build(r,md+1,ne);
+    tree[id]=mrg(tree[l],tree[r]);
+}
+pair<ll,ll> query(int qs,int qe,int id=0,int ns=0,int ne=n-1){
+    if (ns>qe || qs>ne){
+        pair<ll,ll> h;
+        h=make_pair(0,0);
+        return h; //infinity
+    }
+    if (qs<=ns && qe>=ne)
+        return tree[id];
+    int l=2*id+1;
+    int r=l+1;
+    int md=ns+(ne-ns)/2;
+    return mrg(query(qs,qe,l,ns,md),query(qs,qe,r,md+1,ne));
+}
+
+
+
+//changer une valeur
+void upd(int pos,ll val,int id=0,int ns=0,int ne=n-1){
+    if (ns>pos || pos>ne)
+        return ;
+    if (ns==ne){
+        pair<ll,ll> h;
+        h=make_pair(val,0);
+        tree[id]=h;
+        return ;
+    }
+    int l=2*id+1;
+    int r=l+1;
+    int md=ns+(ne-ns)/2;
+    upd(pos,val,l,ns,md);
+    upd(pos,val,r,md+1,ne);
+    tree[id]=mrg(tree[l],tree[r]);
+}
+
+
+
+
+void solve(){
+    ll a,b;
+    cin>>a>>b;
+    cout<<a+b<<endl;
+}
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+  //  freopen("ghanophobia.in","r",stdin);
+    int t=1;
+    ll k;
+   // cin>>t;
+    while(t--){
+            solve();
+    }
+return 0;
+}

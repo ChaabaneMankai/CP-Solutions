@@ -1,0 +1,125 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int MOD = 1e9+7;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+
+
+void solve() {
+    ll n;
+    cin>>n;
+    vector<ll> a(n);
+    for (ll i=0;i<n;i++){
+        cin>>a[i];
+    }
+    ll mex=0;
+    vector<ll> fr(n+1);
+    deque<pair<ll,ll>> q;
+    ll sum=0;
+    for (ll i=0;i<n;i++){
+        fr[a[i]]++;
+        while(fr[mex]) mex++;
+        q.pb({mex,1});
+        sum+=mex;
+    }
+    ll res=sum;
+  /*  for (auto it = q.begin(); it != q.end(); ++it)
+        cout << '\t' << (*it).first<<" "<<(*it).second;
+    cout << '\n';
+    cout<<"sum "<<sum<<endl;*/
+    for (ll i=0;i<n;i++){
+        pair<ll,ll> e={a[i],0};
+        q.front().second= q.front().second -1;
+        sum-=q.front().first;
+        if (q.front().second==0){
+            q.pop_front();
+        }
+        while(q.size()>0 && q.back().first>=a[i]){
+            sum-=(q.back().first*q.back().second);
+            e.second+=q.back().second;
+            q.pop_back();
+        }
+      //  cout<<"here sum "<<sum<<endl;
+        q.push_back({a[i],e.second});
+        q.push_back({n,1});
+        sum+=a[i]*e.second;
+        sum+=(n);
+        res=max(res,sum);
+   /*     cout<<"step "<<i<<endl;
+        for (auto it = q.begin(); it != q.end(); ++it)
+        cout << '\t' << (*it).first<<" "<<(*it).second;
+    cout << '\n';
+    cout<<"sum "<<sum<<endl;*/
+    }
+    cout<<res<<endl;
+}
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);
+   // freopen("input.txt","r",stdin);
+   // freopen("output.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<10000005;i++){
+    if (pre[i]) h.pb(i);
+   }*/
+ /*  fact[1]=1;
+   fact[0]=1;
+   for (ll i=2;i<=200002;i++){
+    fact[i]=fact[i-1]*i;
+   }*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

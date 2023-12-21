@@ -1,0 +1,146 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef int ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define vl vector<ll>
+#define pll pair<ll,ll>
+#define vll vector<pll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define fi(i,j,k,l) for(ll i=j;i>=k;i-=l)
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp(a,b) make_pair(a,b)
+#define endl "\n"
+const db pi=3.14159265359;
+const int mod = 998244353;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+ll n,k;
+
+bool chk(int mid, vi &ar, int k)
+{
+    int n = ar.size();
+    int tot = 0;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        if (mid < ar[i])
+            continue;
+        int x = (mid - ar[i]) / (i + 1);
+        x++;
+        tot += x;
+        mid -= x * (i + 1);
+        if (mid < 0)
+            return false;
+    }
+    return tot > k;
+}
+
+void solve() {
+   ll n;
+   cin>>n;
+   ll a[n];
+   ll maxi=-1e9;
+   ll ind=n;
+   f(i,0,n,1){
+     cin>>a[i];
+     maxi=max(maxi,a[i]);
+     if (maxi==a[i]) ind=i;
+   }
+  /* bool v=true;
+   f(i,1,n,1){
+   if (a[i]<a[i-1]){
+    v=false;
+   }
+   }
+   if (v){
+    cout<<0<<endl;
+    return;
+   }*/
+   vll v;
+    if (n==1){
+        cout<<0<<endl;
+        return;
+    }
+   if (maxi<=0){
+    fi(i,n-2,0,1){
+        v.pb(mp(i+1,i+2));
+    }
+   }
+   else{
+    while(maxi<=20){ v.pb(mp(ind+1,ind+1));
+    maxi=maxi+maxi;}
+    v.pb(mp(2,ind+1));
+    v.pb(mp(2,ind+1));
+    f(i,2,n,1){
+    v.pb(mp(i+1,i));
+    v.pb(mp(i+1,i));
+    }
+
+   }
+
+
+   cout<<v.size()<<endl;
+   for (ll i=0;i<v.size();i++){
+    cout<<v[i].ff<<" "<<v[i].ss<<endl;
+   }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<105;i++){
+    if (pre[i]) h.pb(i);
+   }
+   sort(h.begin(),h.end(),greater<ll>());*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

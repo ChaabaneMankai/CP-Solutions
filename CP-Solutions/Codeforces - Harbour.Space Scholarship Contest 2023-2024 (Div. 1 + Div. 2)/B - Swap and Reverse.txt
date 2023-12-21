@@ -1,0 +1,119 @@
+#include <bits/stdc++.h>
+#include <cstring>
+#include <math.h>
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double db;
+//typedef double db;
+#define ss second
+#define ff first
+#define pb push_back
+#define vi vector<int>
+#define pii pair<int,int>
+#define vii vector<pii>
+#define v vector<pll>
+#define pll pair<ll,ll>
+#define vll vector<ll>
+#define vd vector<db>
+#define pdd  pair<db,db>
+#define vdd  vector<pdd>
+#define mll map <ll,ll>
+#define sl set <ll>
+#define sll set <pll>
+#define f(i,j,k,l) for(ll i=j;i<k;i+=l)
+#define fj(j,m) for(auto j=m.begin();j!=m.end();++j)
+#define mp make_pair
+#define endl "\n"
+const db pi=3.14159265359;
+const int mod = 998244353;
+const db EPS = 0.000000001; // 1 e -9
+const ll inf = (ll)1e18;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+//set<ll> s;
+
+//ll k=-1;
+void solve() {
+    ll n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    if(k%2==0){
+        sort(s.begin(),s.end());
+        cout<<s<<endl;
+        return;
+    }
+    string s2="",s3="";
+    f(i,0,n,2) s2+=s[i];
+    f(i,1,n,2) s3+=s[i];
+    sort(s2.begin(),s2.end());
+    sort(s3.begin(),s3.end());
+    char s4[n];
+    ll j=0;
+    f(i,0,n,2){
+        s4[i]=s2[j];
+        j++;
+    }
+    j=0;
+    f(i,1,n,2){
+         s4[i]=s3[j];
+         j++;}
+   /* for (ll i=n-1;i>=0;i--){
+        if(i-2>=0 && s[i]<s[i-2]){
+            swap(s[i],s[i-2]);
+        }
+    }*/
+    f(i,0,n,1) cout<<s4[i];
+    cout<<endl;
+    return;
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(nullptr);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<105;i++){
+    if (pre[i]) h.pb(i);
+   }*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

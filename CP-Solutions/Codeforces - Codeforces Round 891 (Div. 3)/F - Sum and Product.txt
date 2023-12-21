@@ -1,0 +1,94 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =200005;
+const ll MOD=1000000007;
+using namespace std;
+double pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+ll gcd(ll a , ll b) {return b ? gcd(b , a % b) : a ;}
+ll lcm(ll a , ll b) {return (a * b) / gcd(a , b);}
+void yes(){
+    cout<<"YES"<<endl;
+}
+void no(){
+    cout<<"NO"<<endl;
+}
+
+
+
+void solve() {
+    ll n;
+    cin>>n;
+    ll a[n];
+    map<ll,ll> m;
+    for (ll i=0;i<n;i++){
+        cin>>a[i];
+        m[a[i]]++;
+    }
+    ll q;
+    cin>>q;
+    while(q--){
+        ll tot=0;
+        ll x,y;
+        cin>>x>>y;
+        ll d=x*x-4*y;
+        ll ff=(sqrt(d));
+        if (d<0 || ff*ff!=d){
+        }
+        else if (d==0){
+            ll e=(x+sqrt(x*x-4*y))/2;
+            ll g=(x-sqrt(x*x-4*y))/2;
+            tot+=(m[e]*(m[e]-1))/2;
+        }
+        else if(d>0){
+            ll e=(x+sqrt(x*x-4*y))/2;
+            ll g=(x-sqrt(x*x-4*y))/2;
+            tot+=m[e]*m[g];
+        }
+        cout<<tot<<" ";
+    }
+    cout<<endl;
+
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+  /* for (ll i=1;i<100005;i++){
+    pre[i]=1;
+   }
+   pre[1]=0;
+   premier(100001);
+   for (ll i=1;i<105;i++){
+    if (pre[i]) h.pb(i);
+   }
+   sort(h.begin(),h.end(),greater<ll>());*/
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        solve();
+    }
+
+return 0;
+}

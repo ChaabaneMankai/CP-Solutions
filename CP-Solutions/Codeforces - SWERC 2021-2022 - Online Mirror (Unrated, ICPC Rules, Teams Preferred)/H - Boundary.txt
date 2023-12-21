@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =1e5+7;
+const ll MOD=998244353;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+
+vector<ll> printDivisors(ll n)
+{
+    // Vector to store half of the divisors
+    vector<ll> v;
+    for (int i = 1; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+
+            // check if divisors are equal
+            if (n / i == i)
+                v.pb(i);
+            else {
+                v.pb(i);
+
+                // push the second divisor in the vector
+                v.push_back(n / i);
+            }
+        }
+    }
+
+    return v;
+}
+
+
+void solve(){
+  ll w,l;
+  cin>>w>>l;
+  ll s=(2*w)+(l-2)*2;
+  vector<ll> h=printDivisors(s);
+  set<ll> e;
+  e.insert(1);
+  for (ll i=0;i<h.size();i++){
+   // cout<<h[i]<<" ";
+    if ((w-1)%(h[i])==0 && (l-1)%(h[i])==0 && h[i]<=min(w-1,l-1)){
+        e.insert(h[i]);
+    }
+    if ((w-2)%(h[i])==0 && w-2>1 && l%(h[i])==0 && h[i]<=max(w-2,l)){
+        e.insert(h[i]);
+    }
+    if (w%(h[i])==0 && (l-2)%(h[i])==0 && l-2>1 && h[i]<=max(w,l-2)){
+        e.insert(h[i]);
+    }
+    if ((w-1)%(h[i])==0 && (l-2)%(h[i])==0 && (l)%(h[i])==0 && l-2>1 && h[i]<=max(w-1,l-2)){
+        e.insert(h[i]);
+    }
+    if ((l-1)%(h[i])==0 && (w-2)%(h[i])==0 && (w)%(h[i])==0 && w-2>1 && h[i]<=max(l-1,w-2)){
+        e.insert(h[i]);
+    }
+  }
+  cout<<e.size()<<" ";
+  for (auto i:e) cout<<i<<" ";
+  cout<<endl;
+
+
+   }
+
+
+
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+            solve();
+    }
+return 0;
+}

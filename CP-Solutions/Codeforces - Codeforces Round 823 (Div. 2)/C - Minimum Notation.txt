@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+
+#define endl '\n'
+#define f(i,s,n) for(int i=s;i<n;i++)
+#define f1(i,n,s) for(int i=n;i>=s;i--)
+#define pb push_back
+#define fi first
+#define se second
+
+typedef long long ll;
+
+const ll INF = 4e9+5;
+
+const int N =1e5+7;
+const int MOD=1000000007;
+using namespace std;
+ll pi=3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679;
+
+void solve(){
+    string s;
+    cin>>s;
+    ll e=9;
+    map<ll,ll> m;
+    for (ll i=s.size()-1;i>=0;i--){
+        if (s[i]-'0'>e){
+            if (s[i]-'0'==9){
+                m[s[i]-'0']++;
+            }
+            else
+            m[s[i]-'0'+1]++;
+        }
+        else{
+            m[s[i]-'0']++;
+        }
+        e=min(e,(ll)s[i]-'0');
+            }
+    //for (auto i:m)
+      //  cout<<i.first<<" "<<i.second<<endl;
+    /*for (ll i=s.size()-1;i>=0;i--){
+        if (s[i]>e){
+
+        }
+    }*/
+   /* map<ll,ll> m2;
+    for (auto i:m){
+        if (i.first>e){
+            m2[i.first+1]=i.second;
+        }
+        else{
+            m2[i.first]=i.second;
+        }
+    }*/
+    string s2="";
+    for (auto i:m){
+        for (ll j=0;j<i.second;j++){
+            s2+=(i.first+'0');
+        }
+    }
+    cout<<s2<<endl;
+}
+
+
+
+
+
+int main()
+{
+    ios_base::sync_with_stdio(false);cin.tie(NULL);cout.precision(30);
+   // freopen("input.txt","r",stdin);
+   // freopen("out.txt","w",stdout);
+    int t=1;
+    cin>>t;
+    for(int i=0;i<t;i++){
+           // cout<<"Case #"<<k<<": ";
+            solve();
+    }
+return 0;
+}
